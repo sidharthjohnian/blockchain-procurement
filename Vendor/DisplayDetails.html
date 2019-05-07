@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Vendor PO Details</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="description" content="Example of a table with expanding rows using the accordion collapse component." />
+            
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+        <script type='text/javascript'>
+        
+        $(document).ready(function() {
+        
+        });
+        </script>
+		<script>
+		var url_string= window.location.href;
+		
+		var url = new URL(url_string);
+		var c = url.searchParams.get("key");
+		var txt="";
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+           // txt += "<table border='1'>";
+                
+                
+            for (x in myObj) {
+				key=myObj[x].key;
+                txt += "<tr><td><a href='url'>"+ myObj[x].key +"</a> </td><td>" + myObj[x].data.STATUS + "</td><td>" + myObj[x].data.VENDOR + "</td><td>" + myObj[x].data.MODIFIEDDATE + "</td>";
+            }
+			
+           // txt += "</table>";       
+            document.getElementById("demo").innerHTML = txt;
+			for (x in myObj) {
+				key=myObj[x].key;
+				
+				//getKeyItems(key);
+            }
+        }
+    };
+    //xmlhttp.open("GET", "http://ec2-35-154-249-127.ap-south-1.compute.amazonaws.com:3000/listStreamItems/purchaseorders", true);
+    xmlhttp.open("GET", "http://ec2-13-232-144-180.ap-south-1.compute.amazonaws.com:3000/listStreamKeyItems/purchaseorders/"+c, true);
+    
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+    
+    </script>
+	<script>
+	/* function getKeyItems(key){
+	var param=key, txt="";
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET", "http://ec2-13-232-144-180.ap-south-1.compute.amazonaws.com:3000/listStreamKeyItems/purchaseorders/200", true);
+    
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+			
+			
+            txt += "<table border='1'>"
+                
+                
+            for (x in myObj) {
+				key=myObj[x].key;
+				//alert(key);
+                txt += "<tr><td>" + myObj[x].key + "</td><td>" + myObj[x].data.STATUS + "</td><td>" + myObj[x].data.VENDOR + "</td><td>" + myObj[x].data.CREATIONDATE + "</td></tr>";
+                //alert(txt);
+            }
+            txt += "</table>"   
+			//alert(txt);
+			
+            document.getElementById("multiCollapseExample1").innerHTML = txt;
+			
+        }
+    };
+    
+	} */
+	
+	</script>
+	
+        <style type="text/css">
+             tr.collapse.in {
+			display:table-row;
+			}
+			.success {color: green;}
+			h2.headertekst {
+				text-align: center;
+			}
+        </style>
+	</head> 
+   
+    <body>
+	<h2 class="headertekst">Orders List</h2>
+       
+			<div class="">
+				<div class="" >
+					
+					
+					<table class="table ">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Status</th>
+								<th>Vendor</th>
+								<th>Modified Date</th>
+
+							</tr>
+						</thead>
+							<tbody id="demo">
+                
+							</tbody>
+					</table>
+				</div>
+			</div>
+		
+	  
+	 
+    </body>
+</html>

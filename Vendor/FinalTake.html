@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Vendor PO</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="description" content="Example of a table with expanding rows using the accordion collapse component." />
+            
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+        <script type='text/javascript'>
+        
+        $(document).ready(function() {
+        
+        });
+        </script>
+		<script>
+    var obj, dbParam, xmlhttp, myObj, x, txt = "";
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+           // txt += "<table border='1'>";
+                
+                
+           // for (x in myObj) {
+		   x = myObj.length-1;
+				key=myObj[x].key;
+				//alert(key);
+                txt += "<tr><td><a href='DisplayDetails.html?key="+myObj[x].key+"'>"+ myObj[x].key +"</a> </td><td>" + myObj[x].data.STATUS + "</td><td>" + myObj[x].data.VENDOR + "</td><td>" + myObj[x].data.CREATIONDATE + "</td><td><button id="+key+" class='btn btn-success' onclick=confirmed('"+key+"');>Confirmed</button>&nbsp<button id="+key+" class='btn btn-warning' onclick=inProgress('"+key+"');>In-Progress</button>&nbsp<button id="+key+" class='btn success' onclick=readyForPickUp('"+key+"');>ReadyForPickUp</button></td></tr>";
+                txt += "<div class='multi-collapse collapse show' id=multiCollapseExample1></div>";
+          //  }
+		      
+            document.getElementById("demo").innerHTML = txt;
+			for (x in myObj) {
+				key=myObj[x].key;
+            }
+        }
+    };
+    xmlhttp.open("GET", "http://ec2-13-232-144-180.ap-south-1.compute.amazonaws.com:3000/listStreamItems/purchaseorders", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send();
+    
+    </script>
+	<script>
+	function confirmed(keyParam){
+	//alert(keyParam);
+		var key= keyParam;
+		var xmlhttp;
+		//alert(key);
+		var json11={"KEY": key, "DATA": {"STATUS": "Confirmed"}};
+		 xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("POST", "http://ec2-13-232-144-180.ap-south-1.compute.amazonaws.com:3000/updateStatus/purchaseorders", true);
+		xmlhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+		//alert(json11);
+    xmlhttp.send(JSON.stringify(json11));
+		
+	}
+	
+	function inProgress(keyParam){
+	//alert(keyParam);
+		var key= keyParam;
+		var xmlhttp;
+		//alert(key);
+		var json11={"KEY": key, "DATA": {"STATUS": "In Progress"}};
+		 xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("POST", "http://ec2-13-232-144-180.ap-south-1.compute.amazonaws.com:3000/updateStatus/purchaseorders", true);
+		xmlhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+		//alert(json11);
+    xmlhttp.send(JSON.stringify(json11));
+		
+	}
+	
+	function readyForPickUp(keyParam){
+	//alert(keyParam);
+		var key= keyParam;
+		var xmlhttp;
+		//alert(key);
+		var json11={"KEY": key, "DATA": {"STATUS": "Ready for Pickup"}};
+		 xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("POST", "http://ec2-13-232-144-180.ap-south-1.compute.amazonaws.com:3000/updateStatus/purchaseorders", true);
+		xmlhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+		//alert(json11);
+    xmlhttp.send(JSON.stringify(json11));
+		
+	}
+	
+	</script>
+	
+        <style type="text/css">
+             tr.collapse.in {
+			display:table-row;
+			}
+			.success {color: green;}
+			h2.headertekst {
+				text-align: center;
+			}
+        </style>
+	</head> 
+   
+    <body>
+	<h2 class="headertekst">Orders List</h2>
+       
+			<div class="">
+				<div class="" >
+					
+					
+					<table class="table ">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Status</th>
+								<th>Vendor</th>
+								<th>Creation Date</th>
+								<th>Action</th>
+
+							</tr>
+						</thead>
+							<tbody id="demo">
+                
+							</tbody>
+					</table>
+				</div>
+			</div>
+		
+	  
+	 
+    </body>
+</html>
