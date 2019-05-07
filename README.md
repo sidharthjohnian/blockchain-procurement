@@ -3,7 +3,7 @@ This POC imagines a world of procurement where all participants in the supply ch
 
 We are using Multichain 2.0 APIs to insert the data into the blockchain.
 
-#Players
+# Players
 
 1. Buyer- 
 Buyer will be responsible for the creating and receiving the purchase order in blockchain ecosystem
